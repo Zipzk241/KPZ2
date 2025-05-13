@@ -1,10 +1,10 @@
 package com.kpz2.ui;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import com.kpz2.storage.GameHistoryManager;
+import com.kpz2.ai.SimpleAI;
 
 public class GameController {
     @FXML private Button cell00;
@@ -16,9 +16,12 @@ public class GameController {
     @FXML private Button cell20;
     @FXML private Button cell21;
     @FXML private Button cell22;
+    @FXML private Button restartButton;
+    @FXML private ChoiceBox<String> modeChoiceBox;
 
     private boolean xTurn = true;
     private Button[][] cells;
+    private boolean isAIMode = false;
 
     @FXML
     public void initialize() {
@@ -33,59 +36,61 @@ public class GameController {
                 cell.setOnAction(event -> handleMove(cell));
             }
         }
+
+        modeChoiceBox.getItems().addAll("Player vs Player", "Player vs AI");
+        modeChoiceBox.setValue("Player vs Player");
+        modeChoiceBox.setOnAction(e -> isAIMode = modeChoiceBox.getValue().equals("Player vs AI"));
     }
 
     private void handleMove(Button cell) {
-        if (cell.getText().isEmpty()) {
-            cell.setText(xTurn ? "X" : "O");
-            String currentPlayer = xTurn ? "X" : "O";
+        if (!cell.getText().isEmpty()) return;
 
-            if (checkWin()) {
-                GameHistoryManager.saveResult(currentPlayer);
-                showWinnerAlert(currentPlayer);
-                disableBoard();
-            } else if (isDraw()) {
-                showDrawAlert();
-                disableBoard();
-            } else {
-                xTurn = !xTurn;
+        cell.setText(xTurn ? "X" : "O");
+        String currentPlayer = xTurn ? "X" : "O";
+
+        if (checkWin()) {
+            GameHistoryManager.saveResult(currentPlayer);
+            showWinnerAlert(currentPlayer);
+            disableBoard();
+            return;
+        } else if (isDraw()) {
+            showDrawAlert();
+            disableBoard();
+            return;
+        }
+
+        xTurn = !xTurn;
+
+        if (isAIMode && !xTurn) {
+            Button aiMove = SimpleAI.chooseMove(cells);
+            if (aiMove != null) {
+                handleMove(aiMove);
             }
         }
     }
-
 
     private boolean checkWin() {
         for (int i = 0; i < 3; i++) {
             if (!cells[i][0].getText().isEmpty() &&
                     cells[i][0].getText().equals(cells[i][1].getText()) &&
-                    cells[i][0].getText().equals(cells[i][2].getText())) {
-                return true;
-            }
+                    cells[i][0].getText().equals(cells[i][2].getText())) return true;
             if (!cells[0][i].getText().isEmpty() &&
                     cells[0][i].getText().equals(cells[1][i].getText()) &&
-                    cells[0][i].getText().equals(cells[2][i].getText())) {
-                return true;
-            }
+                    cells[0][i].getText().equals(cells[2][i].getText())) return true;
         }
         if (!cells[0][0].getText().isEmpty() &&
                 cells[0][0].getText().equals(cells[1][1].getText()) &&
-                cells[0][0].getText().equals(cells[2][2].getText())) {
-            return true;
-        }
+                cells[0][0].getText().equals(cells[2][2].getText())) return true;
         if (!cells[0][2].getText().isEmpty() &&
                 cells[0][2].getText().equals(cells[1][1].getText()) &&
-                cells[0][2].getText().equals(cells[2][0].getText())) {
-            return true;
-        }
+                cells[0][2].getText().equals(cells[2][0].getText())) return true;
         return false;
     }
 
     private boolean isDraw() {
         for (Button[] row : cells) {
             for (Button cell : row) {
-                if (cell.getText().isEmpty()) {
-                    return false;
-                }
+                if (cell.getText().isEmpty()) return false;
             }
         }
         return true;
