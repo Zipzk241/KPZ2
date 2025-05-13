@@ -7,6 +7,8 @@ import com.kpz2.game.Player;
 import com.kpz2.game.AIPlayer;
 import com.kpz2.game.Game;
 import com.kpz2.game.Board;
+import com.kpz2.util.Constants;
+
 
 public class GameController {
     @FXML private Button cell00;

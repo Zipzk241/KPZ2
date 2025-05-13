@@ -1,5 +1,6 @@
 package com.kpz2.game;
 
+import com.kpz2.util.Constants;
 public abstract class Player {
     protected String symbol;
 

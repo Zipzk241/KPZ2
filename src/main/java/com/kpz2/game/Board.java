@@ -1,10 +1,12 @@
 package com.kpz2.game;
 
+import com.kpz2.util.Constants;
+
 public class Board {
     private final String[][] grid;
 
     public Board() {
-        grid = new String[3][3];
+        grid = new String[Constants.BOARD_SIZE][Constants.BOARD_SIZE];
         clear();
     }
 

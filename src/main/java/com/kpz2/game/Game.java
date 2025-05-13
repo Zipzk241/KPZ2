@@ -1,5 +1,7 @@
 package com.kpz2.game;
 
+import com.kpz2.util.Constants;
+
 public class Game {
     private final Board board;
     private final Player playerX;

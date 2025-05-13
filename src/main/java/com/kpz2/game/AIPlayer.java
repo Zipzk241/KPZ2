@@ -1,6 +1,7 @@
 package com.kpz2.game;
 
 import java.util.Random;
+import com.kpz2.util.Constants;
 
 public class AIPlayer extends Player {
     private Random random;
@@ -12,10 +13,9 @@ public class AIPlayer extends Player {
 
     @Override
     public int[] makeMove(String[][] board) {
-        // Very basic: pick the first empty cell randomly
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                if (board[i][j] == null || board[i][j].isEmpty()) {
+        for (int i = 0; i < Constants.BOARD_SIZE; i++) {
+            for (int j = 0; j < Constants.BOARD_SIZE; j++) {
+                if (board[i][j] == null || board[i][j].equals(Constants.EMPTY_CELL)) {
                     return new int[]{i, j};
                 }
             }
