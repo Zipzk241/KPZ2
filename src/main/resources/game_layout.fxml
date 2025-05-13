@@ -20,4 +20,6 @@
     <Button fx:id="cell20" GridPane.rowIndex="2" GridPane.columnIndex="0" prefWidth="100" prefHeight="100" />
     <Button fx:id="cell21" GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="100" prefHeight="100" />
     <Button fx:id="cell22" GridPane.rowIndex="2" GridPane.columnIndex="2" prefWidth="100" prefHeight="100" />
+    <Button fx:id="restartButton" text="Restart" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="3"
+            prefWidth="300" prefHeight="40" onAction="#restartGame"/>
 </GridPane>

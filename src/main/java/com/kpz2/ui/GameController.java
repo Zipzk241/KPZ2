@@ -109,4 +109,15 @@ public class GameController {
             }
         }
     }
+
+    @FXML
+    private void restartGame() {
+        for (Button[] row : cells) {
+            for (Button cell : row) {
+                cell.setText("");
+                cell.setDisable(false);
+            }
+        }
+        xTurn = true;
+    }
 }
