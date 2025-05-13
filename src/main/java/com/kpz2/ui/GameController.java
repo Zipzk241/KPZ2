@@ -2,10 +2,11 @@ package com.kpz2.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
 import com.kpz2.storage.GameHistoryManager;
 import com.kpz2.game.Player;
 import com.kpz2.game.AIPlayer;
+import com.kpz2.game.Game;
+import com.kpz2.game.Board;
 
 public class GameController {
     @FXML private Button cell00;
@@ -20,13 +21,10 @@ public class GameController {
     @FXML private Button restartButton;
     @FXML private ChoiceBox<String> modeChoiceBox;
 
-    private Player playerX;
-    private Player playerO;
-
-    private boolean xTurn = true;
     private Button[][] cells;
-    private String[][] currentBoard;
     private boolean isAIMode = false;
+
+    private Game game;
 
     @FXML
     public void initialize() {
@@ -35,13 +33,6 @@ public class GameController {
                 { cell10, cell11, cell12 },
                 { cell20, cell21, cell22 }
         };
-
-        currentBoard = new String[3][3];
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                currentBoard[i][j] = "";
-            }
-        }
 
         for (Button[] row : cells) {
             for (Button cell : row) {
@@ -53,20 +44,21 @@ public class GameController {
         modeChoiceBox.setValue("Player vs Player");
         modeChoiceBox.setOnAction(e -> {
             isAIMode = modeChoiceBox.getValue().equals("Player vs AI");
-            setupPlayers();
+            setupGame();
         });
 
-        setupPlayers();
+        setupGame();
     }
 
-    private void setupPlayers() {
-        playerX = new Player("X") {
+    private void setupGame() {
+        Player playerX = new Player("X") {
             @Override
             public int[] makeMove(String[][] board) {
                 return null;
             }
         };
 
+        Player playerO;
         if (isAIMode) {
             playerO = new AIPlayer("O");
         } else {
@@ -77,11 +69,12 @@ public class GameController {
                 }
             };
         }
+
+        game = new Game(playerX, playerO);
+        renderBoard();
     }
 
     private void handleMove(Button cell) {
-        if (!cell.getText().isEmpty()) return;
-
         int row = -1, col = -1;
         outer:
         for (int i = 0; i < 3; i++) {
@@ -96,58 +89,37 @@ public class GameController {
 
         if (row == -1 || col == -1) return;
 
-        String currentSymbol = xTurn ? "X" : "O";
-        cell.setText(currentSymbol);
-        currentBoard[row][col] = currentSymbol;
+        if (!game.playMove(row, col)) return;
 
-        if (checkWin()) {
-            GameHistoryManager.saveResult(currentSymbol);
-            showWinnerAlert(currentSymbol);
-            disableBoard();
-            return;
-        } else if (isDraw()) {
-            showDrawAlert();
+        renderBoard();
+
+        if (game.isGameOver()) {
+            String winner = game.getWinnerSymbol();
+            if (winner != null) {
+                GameHistoryManager.saveResult(winner);
+                showWinnerAlert(winner);
+            } else {
+                showDrawAlert();
+            }
             disableBoard();
             return;
         }
 
-        xTurn = !xTurn;
-
-        if (isAIMode && !xTurn) {
-            int[] move = playerO.makeMove(currentBoard);
+        if (isAIMode && game.getCurrentPlayer() instanceof AIPlayer) {
+            int[] move = game.getCurrentPlayer().makeMove(game.getBoard().getCopy());
             if (move != null) {
                 handleMove(cells[move[0]][move[1]]);
             }
         }
     }
 
-    private boolean checkWin() {
-        for (int i = 0; i < 3; i++) {
-            if (!currentBoard[i][0].isEmpty() &&
-                    currentBoard[i][0].equals(currentBoard[i][1]) &&
-                    currentBoard[i][0].equals(currentBoard[i][2])) return true;
-            if (!currentBoard[0][i].isEmpty() &&
-                    currentBoard[0][i].equals(currentBoard[1][i]) &&
-                    currentBoard[0][i].equals(currentBoard[2][i])) return true;
-        }
-        if (!currentBoard[0][0].isEmpty() &&
-                currentBoard[0][0].equals(currentBoard[1][1]) &&
-                currentBoard[0][0].equals(currentBoard[2][2])) return true;
-        if (!currentBoard[0][2].isEmpty() &&
-                currentBoard[0][2].equals(currentBoard[1][1]) &&
-                currentBoard[0][2].equals(currentBoard[2][0])) return true;
-        return false;
-    }
-
-    private boolean isDraw() {
+    private void renderBoard() {
+        Board board = game.getBoard();
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if (currentBoard[i][j] == null || currentBoard[i][j].isEmpty()) {
-                    return false;
-                }
+                cells[i][j].setText(board.get(i, j));
             }
         }
-        return true;
     }
 
     private void showWinnerAlert(String winner) {
@@ -176,13 +148,12 @@ public class GameController {
 
     @FXML
     private void restartGame() {
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                cells[i][j].setText("");
-                cells[i][j].setDisable(false);
-                currentBoard[i][j] = "";
+        game.reset();
+        for (Button[] row : cells) {
+            for (Button cell : row) {
+                cell.setDisable(false);
             }
         }
-        xTurn = true;
+        renderBoard();
     }
 }
