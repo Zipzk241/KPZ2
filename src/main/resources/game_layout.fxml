@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.ChoiceBox?>
 
 <GridPane fx:id="boardGrid" xmlns:fx="http://javafx.com/fxml"
           fx:controller="com.kpz2.ui.GameController"
@@ -20,6 +21,9 @@
     <Button fx:id="cell20" GridPane.rowIndex="2" GridPane.columnIndex="0" prefWidth="100" prefHeight="100" />
     <Button fx:id="cell21" GridPane.rowIndex="2" GridPane.columnIndex="1" prefWidth="100" prefHeight="100" />
     <Button fx:id="cell22" GridPane.rowIndex="2" GridPane.columnIndex="2" prefWidth="100" prefHeight="100" />
+    <ChoiceBox fx:id="modeChoiceBox" GridPane.rowIndex="4" GridPane.columnIndex="0" GridPane.columnSpan="3"
+               prefWidth="300" prefHeight="30" />
     <Button fx:id="restartButton" text="Restart" GridPane.rowIndex="3" GridPane.columnIndex="0" GridPane.columnSpan="3"
             prefWidth="300" prefHeight="40" onAction="#restartGame"/>
+
 </GridPane>
