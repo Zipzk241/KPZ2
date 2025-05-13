@@ -6,13 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="483bedbd-54a1-43c0-ba9c-e5e09e3b8de9" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kpz2/game/AIPlayer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kpz2/game/AIPlayer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kpz2/game/Board.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kpz2/game/Board.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kpz2/game/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kpz2/game/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kpz2/game/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kpz2/game/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kpz2/storage/GameHistoryManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kpz2/storage/GameHistoryManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kpz2/ui/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kpz2/ui/GameController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/kpz2/ui/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/kpz2/ui/MainApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +161,7 @@
       <option name="presentableId" value="Default" />
       <updated>1747151575448</updated>
       <workItem from="1747151576799" duration="218000" />
-      <workItem from="1747151829035" duration="804000" />
+      <workItem from="1747151829035" duration="943000" />
     </task>
     <servers />
   </component>

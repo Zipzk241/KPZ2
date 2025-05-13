@@ -57,7 +57,7 @@ TicTacToe/
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourname/tictactoe-java.git
+   git clone https://github.com/Zipzk241/KPZ2
 2. Open the project in your favorite Java IDE (e.g., IntelliJ IDEA, Eclipse)
 3. Ensure you have Java 11+ and JavaFX installed and configured
 4. Run the MainApp.java class
@@ -67,4 +67,4 @@ TicTacToe/
 - JavaFX
 - OOP principles (MVC-based architecture)
 - File-based persistence (CSV)
-- AI logic using Minimax algorithm
+- AI logic
