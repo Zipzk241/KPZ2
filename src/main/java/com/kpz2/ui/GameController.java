@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import com.kpz2.storage.GameHistoryManager;
 
 public class GameController {
     @FXML private Button cell00;
@@ -37,8 +38,11 @@ public class GameController {
     private void handleMove(Button cell) {
         if (cell.getText().isEmpty()) {
             cell.setText(xTurn ? "X" : "O");
+            String currentPlayer = xTurn ? "X" : "O";
+
             if (checkWin()) {
-                showWinnerAlert(xTurn ? "O" : "X");
+                GameHistoryManager.saveResult(currentPlayer);
+                showWinnerAlert(currentPlayer);
                 disableBoard();
             } else if (isDraw()) {
                 showDrawAlert();
@@ -48,6 +52,7 @@ public class GameController {
             }
         }
     }
+
 
     private boolean checkWin() {
         for (int i = 0; i < 3; i++) {
